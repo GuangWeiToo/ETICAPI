@@ -1,8 +1,22 @@
-app.use(bodyParser.json());
+const express = require("express");
+const router = express.Router();
+const bodyParser = require("body-parser");
+// Middleware to parse JSON bodies
+router.use(bodyParser.json());
+
+// Test Route
+router.get("/test", (req, res) => {
+    return res.send("Works");
+});
+
+module.exports = router;
+
+
+/**
+ * app.use(bodyParser.json());
 const { verifyApplication } = require("./utility");
 
-// test Route
-app.get("/test", async (req, res) => {
+ * app.get("/test", async (req, res) => {
     const {key} = req.query;
     const verificationResult = verifyApplication(key);
     if (verificationResult) {
@@ -22,4 +36,4 @@ app.get("/test", async (req, res) => {
     await userRequest();
   });
 
-  module.exports = router;
+ */

@@ -4,12 +4,14 @@ require("dotenv").config();
 const serviceRoleKey = process.env.SUPABASE_KEY;
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabase = createClient(supabaseUrl, serviceRoleKey);
+const express = require("express");
+const router = express.Router();
 // Middleware to parse JSON bodies
-app.use(bodyParser.json());
+router.use(bodyParser.json());
 const { verifyApplication } = require("./utility");
 
 // Route to update progress
-app.post("/updateProgress", async (req, res) => {
+router.post("/updateProgress", async (req, res) => {
     const verificationResult = verifyApplication(key);
     if (verificationResult) {
       return res.status(403).send(verificationResult);

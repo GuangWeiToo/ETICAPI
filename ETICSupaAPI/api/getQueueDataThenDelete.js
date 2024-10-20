@@ -4,15 +4,17 @@ require("dotenv").config();
 const serviceRoleKey = process.env.SUPABASE_KEY;
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabase = createClient(supabaseUrl, serviceRoleKey);
+const express = require("express");
+const router = express.Router();
 // Middleware to parse JSON bodies
-app.use(bodyParser.json());
+router.use(bodyParser.json());
 const { verifyApplication } = require("./utility");
 
 // Simple queue to hold requests
 let requestQueue = [];
 
 // Route to get queue data
-app.get("/getQueueDataThenDelete", async (req,res) => {
+router.get("/getQueueDataThenDelete", async (req,res) => {
   const userRequest = async () => {
     const {key,place} = req.query;// req.query for GET parameters and req.body for POST
     const verificationResult = verifyApplication(key);  // Verify key
