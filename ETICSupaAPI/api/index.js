@@ -22,7 +22,10 @@ function verifyApplication(privateKey) {
 app.get("/getQueueDataThenDelete", async (req,res) => {
   const userRequest = async () => {
     const {key,place} = req.query;// req.query for GET parameters and req.body for POST
-    verifyApplication(key);
+    const verificationResult = verifyApplication(key);  // Verify key
+    if (verificationResult) {
+      return res.status(403).send(verificationResult);
+    }
     const { data:selectedRows, error } = await supabase
       .from("database_queue")
       .select("place")
@@ -69,7 +72,10 @@ app.post("/sendRequest", async (req, res) => {
     requestId,
     discordID,
   } = req.body;
-  verifyApplication(key);
+  const verificationResult = verifyApplication(key);
+  if (verificationResult) {
+    return res.status(403).send(verificationResult);
+  }
   const userRequest = async () => {
     const {data, error } = await supabase.from("request_log").insert([
       {
@@ -93,7 +99,10 @@ app.post("/sendRequest", async (req, res) => {
 app.get("/getProgress", async (req, res) => {
 
   const {key, request_id } = req.query;
-  verifyApplication(key);
+  const verificationResult = verifyApplication(key);
+  if (verificationResult) {
+    return res.status(403).send(verificationResult);
+  }
   const userRequest = async () => {
     const { data, error } = await supabase
       .from("progress")
@@ -113,7 +122,10 @@ app.get("/getProgress", async (req, res) => {
 
 // Route to update progress
 app.post("/updateProgress", async (req, res) => {
-  verifyApplication(key);
+  const verificationResult = verifyApplication(key);
+  if (verificationResult) {
+    return res.status(403).send(verificationResult);
+  }
   const { key,column,msg, request_id } = req.query; // Use req.query for GET parameters
   const allowedColumns = ["progress","pick_up_location"];
   if (!allowedColumns.includes(column)) {
