@@ -132,7 +132,10 @@ app.post("/updateProgress", async (req, res) => {
   await userRequest();
 });
 
+
+/*
 // Start the server * must be changed later
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
+*/
