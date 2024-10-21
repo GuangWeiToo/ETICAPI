@@ -1,11 +1,12 @@
-const express = require("express");
-const router = express.Router();
+const express = require('express');
 const bodyParser = require("body-parser");
+const router = express.Router();
 // Middleware to parse JSON bodies
 router.use(bodyParser.json());
 
+
 // Test Route
-router.get("/test", (req, res) => {
+router.get("/", (req, res) => {
     return res.send("Works");
 });
 
