@@ -19,29 +19,32 @@ router.post("/", async (req, res) => {
         quantity,
         requestId,
         discordID,
+        place
     } = req.body;
-
+   
     // Verify application key
     const verificationResult = verifyApplication(key);
     if (verificationResult) {
-        return res.status(403).send(verificationResult+"Invalid Key");
+        return res.status(403).send("Invalid Key");
     }
 
     try {
         // Insert data into Supabase
         const { data, error } = await supabase
             .from("request_log")
-            .insert([{
+            .insert({
                 student_name: studentName,
                 student_id: studentId,
                 file_link: stlFileLink,
                 quantity: quantity,
                 request_id: requestId,
                 discord_id: discordID,
-            }]);
+                place:place
+            });
 
         // Handle SQL insert error
         if (error) {
+            console.log(error);
             return res.status(500).send("Error inserting into the database");
         }
 
