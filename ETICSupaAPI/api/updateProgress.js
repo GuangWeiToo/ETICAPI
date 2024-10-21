@@ -13,10 +13,9 @@ const { verifyApplication } = require("./utility");
 router.post("/", async (req, res) => {
     const { key, column, msg, request_id } = req.body; // Use req.body for POST parameters
 
-    // Verify application key
     const verificationResult = verifyApplication(key);
     if (verificationResult) {
-        return res.status(403).send(verificationResult);
+        return res.status(403).send("Invalid Key");
     }
 
     const allowedColumns = ["progress", "pick_up_location"];

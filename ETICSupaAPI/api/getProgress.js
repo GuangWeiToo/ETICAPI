@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
     // Verify the application key
     const verificationResult = verifyApplication(key);
     if (verificationResult) {
-        return res.status(403).send(verificationResult);
+        return res.status(403).send("Invalid Key");
     }
 
     try {
