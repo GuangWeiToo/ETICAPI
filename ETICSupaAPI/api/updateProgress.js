@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
     try {
         // Update the specified column in the 'progress_table'
         const { data, error } = await supabase
-            .from("progress_table") // Ensure the table name is correct
+            .from("progress") // Ensure the table name is correct
             .update({ [column]: msg })
             .eq("request_id", request_id);
 
