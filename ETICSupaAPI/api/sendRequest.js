@@ -27,6 +27,27 @@ router.post("/", async (req, res) => {
     if (verificationResult) {
         return res.status(403).send("Invalid Key");
     }
+    if (!studentName || typeof studentName !== 'string' || studentName.length > 100) {
+        return res.status(400).send("Invalid student name");
+    }
+    if (!Number.isInteger(studentId)) {
+        return res.status(400).send("Invalid student ID");
+    }
+    if (!validator.isURL(stlFileLink)) {
+        return res.status(400).send("Invalid STL file link");
+    }
+    if (!Number.isInteger(quantity) || quantity <= 0) {
+        return res.status(400).send("Invalid quantity");
+    }
+    if (!validator.isUUID(requestId, 4)) {
+        return res.status(400).send("Invalid request ID");
+    }
+    if (!discordID || typeof discordID !== 'string') {
+        return res.status(400).send("Invalid Discord ID");
+    }
+    if (!place || typeof place !== 'string' || place.length > 100) {
+        return res.status(400).send("Invalid place");
+    }
 
     try {
         // Insert data into Supabase

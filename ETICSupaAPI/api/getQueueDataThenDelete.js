@@ -22,13 +22,17 @@ router.get("/", async (req, res) => {
         if (verificationResult) {
             return res.status(403).send("Invalid Key");
         }
+        
+        if (typeof place !== 'string' || !isValidPlace(place)) {
+            return res.status(400).send("Invalid input");
+        }
 
         try {
             // Fetch data from Supabase
             const { data: selectedRows, error: fetchError } = await supabase
                 .from("database_queue")
                 .select("place")
-                .contains({ place })
+                .eq("place", place)
                 .limit(5);
 
             // Handle SQL query error

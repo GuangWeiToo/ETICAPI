@@ -18,6 +18,9 @@ router.get("/", async (req, res) => {
     if (verificationResult) {
         return res.status(403).send("Invalid Key");
     }
+    if (!Number.isInteger(Number(request_id)) && !isValidUUID(request_id)) {
+        return res.status(400).send("Invalid request ID");
+    }
 
     try {
         // Fetch data from Supabase

@@ -17,8 +17,15 @@ router.post("/", async (req, res) => {
     if (verificationResult) {
         return res.status(403).send("Invalid Key");
     }
-
+    if (typeof msg !== 'string' || msg.length > 255) {
+        return res.status(400).send("Invalid message");
+    }
+    
+    if (!Number.isInteger(request_id)) {
+        return res.status(400).send("Invalid request ID");
+    }    
     const allowedColumns = ["progress", "pick_up_location"];
+    
     if (!allowedColumns.includes(column)) {
         return res.status(400).send("Invalid column name or not allowed");
     }
@@ -26,7 +33,7 @@ router.post("/", async (req, res) => {
     try {
         // Update the specified column in the 'progress_table'
         const { data, error } = await supabase
-            .from("progress") // Ensure the table name is correct
+            .from("progress")
             .update({ [column]: msg })
             .eq("request_id", request_id);
 
