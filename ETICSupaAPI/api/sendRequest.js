@@ -1,7 +1,7 @@
 const express = require('express');
 const { createClient } = require("@supabase/supabase-js");
 require("dotenv").config();
-
+const validator = require('validator'); 
 const serviceRoleKey = process.env.SUPABASE_KEY;
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabase = createClient(supabaseUrl, serviceRoleKey);
