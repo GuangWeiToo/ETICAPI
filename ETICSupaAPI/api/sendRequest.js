@@ -48,7 +48,8 @@ router.post("/", async (req, res) => {
     if (!place || typeof place !== 'string' || place.length > 100) {
         return res.status(400).send("Invalid place");
     }
-    console.log({studentName,
+    console.log(
+        {studentName,
         studentId,
         stlFileLink,
         quantity,
@@ -59,7 +60,7 @@ router.post("/", async (req, res) => {
         // Insert data into Supabase
         const { data, error } = await supabase
             .from("request_log")
-            .insert({
+            .insert([{
                 student_name: studentName,
                 student_id: studentId,
                 file_link: stlFileLink,
@@ -67,7 +68,7 @@ router.post("/", async (req, res) => {
                 request_id: requestId,
                 discord_id: discordID,
                 place:place
-            });
+            }]);
 
         // Handle SQL insert error
         if (error) {
