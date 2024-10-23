@@ -48,14 +48,7 @@ router.post("/", async (req, res) => {
     if (!place || typeof place !== 'string' || place.length > 100) {
         return res.status(400).send("Invalid place");
     }
-    console.log(
-        {studentName,
-        studentId,
-        stlFileLink,
-        quantity,
-        requestId,
-        discordID,
-        place});
+    
     try {
         // Insert data into Supabase
         const { data, error } = await supabase
